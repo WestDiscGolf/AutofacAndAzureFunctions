@@ -1,8 +1,6 @@
-using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Functions.Worker.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Api
 {
@@ -13,6 +11,10 @@ namespace Api
             var host = new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureFunctionsWorkerDefaults()
+                .ConfigureServices(services =>
+                {
+                    services.AddTransient<IGreeting, HelloService>();
+                })
                 .Build();
 
             host.Run();

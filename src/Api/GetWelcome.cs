@@ -8,10 +8,12 @@ namespace Api
 {
     public class GetWelcome
     {
+        private readonly IGreeting _greeting;
         private readonly ILogger _logger;
 
-        public GetWelcome(ILoggerFactory loggerFactory)
+        public GetWelcome(IGreeting greeting, ILoggerFactory loggerFactory)
         {
+            _greeting = greeting;
             _logger = loggerFactory.CreateLogger<GetWelcome>();
         }
 
@@ -23,7 +25,7 @@ namespace Api
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to Azure Functions!");
+            response.WriteString($"{_greeting.Speak()} Welcome to Azure Functions!");
 
             return response;
         }
