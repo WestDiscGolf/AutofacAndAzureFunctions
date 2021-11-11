@@ -1,3 +1,4 @@
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,9 +12,13 @@ namespace Api
             var host = new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureFunctionsWorkerDefaults()
+                .ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterType<HelloService>().As<IGreeting>();
+                })
                 .ConfigureServices(services =>
                 {
-                    services.AddTransient<IGreeting, HelloService>();
+                    
                 })
                 .Build();
 
