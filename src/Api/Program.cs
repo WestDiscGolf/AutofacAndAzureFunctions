@@ -1,7 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Features.AttributeFilters;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Api
 {
@@ -14,7 +14,9 @@ namespace Api
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
-                    builder.RegisterType<HelloService>().As<IGreeting>();
+                    builder.RegisterType<HelloService>().Keyed<IGreeting>("hello");
+                    builder.RegisterType<GoodByeService>().Keyed<IGreeting>("goodbye");
+                    builder.RegisterType<MyService>().As<IMyService>().WithAttributeFiltering();
                 })
                 .ConfigureServices(services =>
                 {
