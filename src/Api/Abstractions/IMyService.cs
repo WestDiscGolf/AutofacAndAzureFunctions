@@ -1,4 +1,4 @@
-namespace Api;
+namespace Api.Abstractions;
 
 public interface IMyService
 {

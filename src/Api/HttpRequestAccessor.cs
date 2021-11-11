@@ -1,4 +1,5 @@
 using System.Threading;
+using Api.Abstractions;
 using Microsoft.Azure.Functions.Worker.Http;
 
 namespace Api;

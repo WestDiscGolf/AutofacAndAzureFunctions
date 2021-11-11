@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Reflection;
+using Api.Abstractions;
 using Autofac;
 using Autofac.Features.AttributeFilters;
 
 namespace Api;
 
-public class HttpHeaderDrivenAttribute : ParameterFilterAttribute
+public class HttpRequestDrivenAttribute : ParameterFilterAttribute
 {
     private const string HeaderName = "X-Greeting";
 

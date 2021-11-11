@@ -1,6 +1,7 @@
+using Api.Abstractions;
 using Autofac.Features.AttributeFilters;
 
-namespace Api;
+namespace Api.Services;
 
 public class MyService : IMyService
 {

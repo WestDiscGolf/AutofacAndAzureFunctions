@@ -1,4 +1,5 @@
 using System.Net;
+using Api.Abstractions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,7 @@ public class GetWelcome
     private readonly ILogger _logger;
         
     public GetWelcome(
-        [HttpHeaderDriven] IGreeting greeting,
+        [HttpRequestDriven] IGreeting greeting,
         ILoggerFactory loggerFactory)
     {
         _greeting = greeting;
