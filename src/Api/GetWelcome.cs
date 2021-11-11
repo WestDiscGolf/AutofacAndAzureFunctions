@@ -1,5 +1,4 @@
 using System.Net;
-using Autofac.Features.AttributeFilters;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -8,17 +7,14 @@ namespace Api;
 
 public class GetWelcome
 {
-    private readonly IGreeting _hello;
-    private readonly IGreeting _goodbye;
+    private readonly IGreeting _greeting;
     private readonly ILogger _logger;
         
     public GetWelcome(
-        [KeyFilter("hello")] IGreeting hello,
-        [KeyFilter("goodbye")] IGreeting goodbye,
+        [HttpHeaderDriven] IGreeting greeting,
         ILoggerFactory loggerFactory)
     {
-        _hello = hello;
-        _goodbye = goodbye;
+        _greeting = greeting;
         _logger = loggerFactory.CreateLogger<GetWelcome>();
     }
 
@@ -30,7 +26,7 @@ public class GetWelcome
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-        response.WriteString($"{_hello.Speak()} and then {_goodbye.Speak()}");
+        response.WriteString($"{_greeting.Speak()} Azure Functions!");
 
         return response;
     }
